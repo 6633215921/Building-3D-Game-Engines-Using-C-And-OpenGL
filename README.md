@@ -46,7 +46,7 @@
 
 ## 📸 ตัวอย่างการทำงาน (Previews)
 
-<video src="1. Generative 2D art\video.mp4" width="1980" height="1140" controls></video>
+<video src="1. Generative 2D art/video.mp4" width="320" height="240" controls></video>
 
 ---
 
