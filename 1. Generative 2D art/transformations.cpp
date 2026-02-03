@@ -76,7 +76,7 @@ Mesh createDashedCircle(int segmentCount, float radius) {
     std::vector<unsigned int> indices;
     const float PI = 3.14159265359f;
 
-    // 1. Generate Vertices (เหมือนวงกลมปกติ แต่เราต้องการแค่ขอบ)
+    // 1. Generate Vertices (����͹ǧ������� ����ҵ�ͧ�����ͺ)
     for (int i = 0; i < segmentCount; i++) {
         float angle = (float)i / segmentCount * 2.0f * PI;
         float x = cos(angle) * radius;
@@ -90,19 +90,19 @@ Mesh createDashedCircle(int segmentCount, float radius) {
         vertices.push_back(1.0f);
         vertices.push_back(1.0f);
         vertices.push_back(1.0f);
-        // UV (ไม่ได้ใช้ แต่ใส่ไว้ให้ format ตรงกับ Shader เดิม)
+        // UV (������� ����������� format �ç�Ѻ Shader ���)
         vertices.push_back(0.0f);
         vertices.push_back(0.0f);
     }
 
-    // 2. Generate Indices สำหรับ GL_LINES (ทำเส้นประ)
-    // เราจะเชื่อมจุด i กับ i+1 แล้วข้ามไป 1 ช่อง เพื่อให้เกิดช่องว่าง
+    // 2. Generate Indices ����Ѻ GL_LINES (����鹻��)
+    // ��Ҩ�������ش i �Ѻ i+1 ���Ǣ���� 1 ��ͧ ��������Դ��ͧ��ҧ
     for (int i = 0; i < segmentCount; i += 2) {
         indices.push_back(i);
         indices.push_back((i + 1) % segmentCount);
     }
 
-    // 3. OpenGL Buffers (Copy Logic เดิมมา)
+    // 3. OpenGL Buffers (Copy Logic �����)
     unsigned int VAO, VBO, EBO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -125,7 +125,7 @@ Mesh createDashedCircle(int segmentCount, float radius) {
 
     glBindVertexArray(0);
 
-    // หมายเหตุ: indexCount ที่ return ไปจะเป็นจำนวนจุดของเส้น ไม่ใช่จำนวนสามเหลี่ยม
+    // �����˵�: indexCount ��� return 仨��繨ӹǹ�ش�ͧ��� �����ӹǹ����������
     return { VAO, VBO, EBO, (int)indices.size() };
 }
 
@@ -179,10 +179,10 @@ int main()
     Mesh earthCircle = createCircle(64, 0.2f);
     Mesh moonCircle = createCircle(64, 0.1f);
 
-    // สร้างเส้นวงโคจร (Orbit Lines)
-    // รัศมี 1.0f คือวงโคจรโลก (ต้องเท่ากับ orbitRadius ของโลกใน Loop)
+    // ���ҧ���ǧ⤨� (Orbit Lines)
+    // ����� 1.0f ���ǧ⤨��š (��ͧ��ҡѺ orbitRadius �ͧ�š� Loop)
     Mesh earthOrbitLine = createDashedCircle(100, 0.75f);
-    // รัศมี 0.5f คือวงโคจรดวงจันทร์ (ต้องเท่ากับ orbitRadius ของดวงจันทร์ใน Loop)
+    // ����� 0.5f ���ǧ⤨ôǧ�ѹ��� (��ͧ��ҡѺ orbitRadius �ͧ�ǧ�ѹ���� Loop)
     Mesh moonOrbitLine = createDashedCircle(60, 0.25f);
 
     // load and create a texture 
@@ -292,7 +292,7 @@ int main()
         // Correct for aspect ratio
         float aspect = (float)width / (float)height;
 
-        // 1. วาดดวงอาทิตย์ (ตรงกลาง / ตามเมาส์)
+        // 1. �Ҵ�ǧ�ҷԵ�� (�ç��ҧ / ��������)
         glm::mat4 sunTransform = glm::mat4(1.0f);
         sunTransform = glm::translate(sunTransform, glm::vec3(xNDC, yNDC, 0.0f));
         sunTransform = glm::scale(sunTransform, glm::vec3(1.0f / aspect, 1.0f, 1.0f));
@@ -303,46 +303,46 @@ int main()
         glDrawElements(GL_TRIANGLES, sunCircle.indexCount, GL_UNSIGNED_INT, 0);
 
 
-        // 2. วาดโลก (โคจรรอบดวงอาทิตย์ + มี Texture)
+        // 2. �Ҵ�š (⤨��ͺ�ǧ�ҷԵ�� + �� Texture)
         // bind textures on corresponding texture units
         glm::mat4 earthTransform = glm::mat4(1.0f);
-        // --- ลำดับการคูณ Matrix สำคัญมาก (อ่านจากล่างขึ้นบนในโค้ด หรือ ขวาไปซ้ายในสมการ) ---
-        float orbitRadius = 0.75f; // ระยะห่างจากดวงอาทิตย์
+        // --- �ӴѺ��äٳ Matrix �Ӥѭ�ҡ (��ҹ�ҡ��ҧ��鹺���� ���� ���仫���������) ---
+        float orbitRadius = 0.75f; // ������ҧ�ҡ�ǧ�ҷԵ��
         float orbitSpeed = 0.3f;
         float selfRotationSpeed = 3.0f;
-        // 1. Scale แก้ Aspect Ratio (ทำสุดท้ายใน Matrix Stack)
+        // 1. Scale �� Aspect Ratio (���ش����� Matrix Stack)
         earthTransform = glm::scale(earthTransform, glm::vec3(1.0f / aspect, 1.0f, 1.0f));
-        // 2. ย้ายไปหาดวงอาทิตย์ (จุดศูนย์กลางการโคจร)
+        // 2. ������Ҵǧ�ҷԵ�� (�ش�ٹ���ҧ���⤨�)
         earthTransform = glm::translate(earthTransform, glm::vec3(xNDC * aspect, yNDC, 0.0f));
-        // 3. การโคจร (Orbit)
-        // ใช้ Matrix แยกเพื่อทำวงรี (ถ้าอยากทำ) หรือใช้วงกลมแบบเดิมก็ได้
+        // 3. ���⤨� (Orbit)
+        // �� Matrix �¡���ͷ�ǧ�� (�����ҡ��) ������ǧ���Ẻ�������
         float orbitAngle = timeValue * orbitSpeed;
-        // ตัวอย่างวงรี: x = a cos(t), y = b sin(t)
+        // ������ҧǧ��: x = a cos(t), y = b sin(t)
         float earthX = cos(orbitAngle) * orbitRadius;
-        float earthY = sin(orbitAngle) * orbitRadius * 1.0f; // 0.9 ถ้าอยากให้เป็นวงรีนิดๆ
+        float earthY = sin(orbitAngle) * orbitRadius * 1.0f; // 0.9 �����ҡ�����ǧ�չԴ�
         earthTransform = glm::translate(earthTransform, glm::vec3(earthX, earthY, 0.0f));
-        // 4. จำลองแกนเอียง (Axial Tilt)
-        // เอียงแกน 23.5 องศา (รอบแกน Z เพราะเรามองแบบ 2D)
-        earthTransform = glm::rotate(earthTransform, glm::radians(-23.5f), glm::vec3(0.0f, 0.0f, 1.0f)); // เอียงแกน
-        // 5. หมุนรอบตัวเอง (Rotation)
-        // สังเกต: เราหมุนรอบแกน Y ของ Earth (ซึ่งตอนนี้เอียงอยู่)
+        // 4. ���ͧ᡹���§ (Axial Tilt)
+        // ���§᡹ 23.5 ͧ�� (�ͺ᡹ Z ��������ͧẺ 2D)
+        earthTransform = glm::rotate(earthTransform, glm::radians(-23.5f), glm::vec3(0.0f, 0.0f, 1.0f)); // ���§᡹
+        // 5. ��ع�ͺ����ͧ (Rotation)
+        // �ѧࡵ: �����ع�ͺ᡹ Y �ͧ Earth (��觵͹������§����)
         earthTransform = glm::rotate(earthTransform, timeValue * selfRotationSpeed, glm::vec3(0.0f, 1.0f, 0.0f));
-        // 1. หาตำแหน่งโลกใน NDC (-1 ถึง 1)
+        // 1. �ҵ��˹��š� NDC (-1 �֧ 1)
         glm::vec4 earthPosNDC = earthTransform * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
-        // 2. แปลงเป็นพิกัดหน้าจอ (Screen Coordinates) เพื่อให้หน่วยเดียวกับ gl_FragCoord
+        // 2. �ŧ�繾ԡѴ˹�Ҩ� (Screen Coordinates) �������˹������ǡѺ gl_FragCoord
         float screenEarthX = (earthPosNDC.x + 1.0f) * 0.5f * currentWidth;
         float screenEarthY = (earthPosNDC.y + 1.0f) * 0.5f * currentHeight;
         glUniform2f(CenterLoc, screenEarthX, screenEarthY);
-        ourShader.setInt("useTexture", 1); // เปิดโหมด Texture
+        ourShader.setInt("useTexture", 1); // �Դ���� Texture
         glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(earthTransform));
-        glBindVertexArray(earthCircle.vao); // ใช้วงกลมอันเดิม หรืออันใหม่ที่ขนาดต่างกันก็ได้
+        glBindVertexArray(earthCircle.vao); // ��ǧ����ѹ��� �����ѹ�����袹Ҵ��ҧ�ѹ����
         glDrawElements(GL_TRIANGLES, earthCircle.indexCount, GL_UNSIGNED_INT, 0);
 
 
-		// 3. วาดดวงจันทร์ (โคจรรอบโลก + มี Texture)
+		// 3. �Ҵ�ǧ�ѹ��� (⤨��ͺ�š + �� Texture)
         glm::mat4 moonTransform = glm::mat4(1.0f);
-        orbitRadius = 0.25f; // ระยะห่างจากโลก
-        orbitSpeed = 0.3f;
+        orbitRadius = 0.25f; // ������ҧ�ҡ�š
+        orbitSpeed = 1.2f;
         selfRotationSpeed = 0.3f;
         moonTransform = glm::scale(moonTransform, glm::vec3(1.0f / aspect, 1.0f, 1.0f));
         moonTransform = glm::translate(moonTransform, glm::vec3(earthPosNDC.x * aspect, earthPosNDC.y, 0.0f));
@@ -350,14 +350,14 @@ int main()
         float moonX = cos(orbitAngle) * orbitRadius;
         float moonY = sin(orbitAngle) * orbitRadius * 1.0f;
         moonTransform = glm::translate(moonTransform, glm::vec3(moonX, moonY, 0.0f));
-        // 4. จำลองแกนเอียง (Axial Tilt)
+        // 4. ���ͧ᡹���§ (Axial Tilt)
         moonTransform = glm::rotate(moonTransform, glm::radians(0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-        // 5. หมุนรอบตัวเอง (Rotation)
-        // สังเกต: เราหมุนรอบแกน Z ของ Moon
+        // 5. ��ع�ͺ����ͧ (Rotation)
+        // �ѧࡵ: �����ع�ͺ᡹ Z �ͧ Moon
         moonTransform = glm::rotate(moonTransform, timeValue * selfRotationSpeed, glm::vec3(0.0f, 0.0f, 1.0f));
-        // 1. หาตำแหน่งโลกใน NDC (-1 ถึง 1)
+        // 1. �ҵ��˹��š� NDC (-1 �֧ 1)
         glm::vec4 moonPosNDC = moonTransform * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
-        // 2. แปลงเป็นพิกัดหน้าจอ (Screen Coordinates) เพื่อให้หน่วยเดียวกับ gl_FragCoord
+        // 2. �ŧ�繾ԡѴ˹�Ҩ� (Screen Coordinates) �������˹������ǡѺ gl_FragCoord
         float screenMoonX = (moonPosNDC.x + 1.0f) * 0.5f * currentWidth;
         float screenMoonY = (moonPosNDC.y + 1.0f) * 0.5f * currentHeight;
         glUniform2f(CenterLoc, screenMoonX, screenMoonY);
@@ -367,7 +367,7 @@ int main()
         glDrawElements(GL_TRIANGLES, moonCircle.indexCount, GL_UNSIGNED_INT, 0);
 
 
-        // --- วาดเส้นวงโคจรโลก (รอบดวงอาทิตย์) ---
+        // --- �Ҵ���ǧ⤨��š (�ͺ�ǧ�ҷԵ��) ---
         glm::mat4 orbitTransform = glm::mat4(1.0f);
         orbitTransform = glm::scale(orbitTransform, glm::vec3(1.0f / aspect, 1.0f, 1.0f));
         orbitTransform = glm::translate(orbitTransform, glm::vec3(xNDC * aspect, yNDC, 0.0f));
@@ -376,7 +376,7 @@ int main()
         glBindVertexArray(earthOrbitLine.vao);
         glDrawElements(GL_LINES, earthOrbitLine.indexCount, GL_UNSIGNED_INT, 0);
 
-        // --- วาดเส้นวงโคจรดวงจันทร์ (รอบโลก) ---
+        // --- �Ҵ���ǧ⤨ôǧ�ѹ��� (�ͺ�š) ---
         glm::mat4 moonOrbitTransform = glm::mat4(1.0f);
         moonOrbitTransform = glm::scale(moonOrbitTransform, glm::vec3(1.0f / aspect, 1.0f, 1.0f));
         moonOrbitTransform = glm::translate(moonOrbitTransform, glm::vec3(earthPosNDC.x * aspect, earthPosNDC.y, 0.0f));

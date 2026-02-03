@@ -1,7 +1,7 @@
 #version 330 core
-layout (location = 0) in vec3 aPos;      // ‡∏ï‡∏≥‡πÅ‡∏´‡∏ô‡πà‡∏á (Pos)
-layout (location = 1) in vec3 aColor;    // ‡∏™‡∏µ (Color)
-layout (location = 2) in vec2 aTexCoord; // ‡∏û‡∏∑‡πâ‡∏ô‡∏ú‡∏¥‡∏ß (Texture)
+layout (location = 0) in vec3 aPos;      // µ”·ÀπËß (Pos)
+layout (location = 1) in vec3 aColor;    //  ’ (Color)
+layout (location = 2) in vec2 aTexCoord; // æ◊Èπº‘« (Texture)
 
 out vec3 ourColor;
 out vec2 TexCoord;
