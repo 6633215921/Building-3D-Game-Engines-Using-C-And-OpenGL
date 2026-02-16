@@ -11,6 +11,7 @@
 ### 1. Gerstner Wave Algorithm (สมการคลื่นผิวน้ำ)
 
 การจำลองความพริ้วไหวของน้ำไม่ได้ใช้เพียงแค่ Sine wave ธรรมดา แต่ใช้สมการ **Gerstner Wave** ซึ่งทำให้จุดบนผิวน้ำมีการเคลื่อนที่ทั้งแนวตั้งและแนวนอน (Circular motion) ทำให้ยอดคลื่นมีความแหลมและสมจริงกว่า
+<img width="756" height="575" alt="Screenshot 2026-02-17 025732" src="https://github.com/user-attachments/assets/4ed9750e-1b1a-4118-bfd9-46c844d6492c" />
 
 * **Superposition:** มีการสร้างคลื่นย่อย 4 ลูก (`waves` vector) ที่มีทิศทาง (Direction), ความชัน (Steepness), ความยาวคลื่น (Wavelength) และความเร็ว (Speed) แตกต่างกัน นำมารวมกันเพื่อสร้างพื้นผิวที่ดูเป็นธรรมชาติ
 * **Real-time Physics:** การคำนวณตำแหน่ง  ของจุดทั้งหมดเกิดขึ้นใหม่ทุกเฟรมตามเวลา (`glfwGetTime`)
