@@ -1,5 +1,7 @@
 # Building-3D-Game-Engines-Using-C-And-OpenGL
+
 ---
+
 # 🌊 3D Gerstner Wave Simulation
 
 โปรเจกต์นี้เป็นการจำลองพลวัตของผิวน้ำ (Fluid Surface Simulation) แบบ 3D 
@@ -50,13 +52,14 @@
 
 ## 📂 โครงสร้างไฟล์ (File Structure)
 
-* `7.4.camera.cpp`: โค้ดหลักในการจัดการ Window, Loop การทำงาน, และการคำนวณสมการ Gerstner Wave บน CPU ก่อนส่งไปวาด
+* `camera_class.cpp`: โค้ดหลักในการจัดการ Window, Loop การทำงาน, และการคำนวณสมการ Gerstner Wave บน CPU ก่อนส่งไปวาด
 * `Icosphere.h`: Class สำหรับสร้าง Vertex Data ของทรงกลม
 * `7.4.camera.vs` / `7.4.camera.fs`: Shader พื้นฐานสำหรับจัดการ Coordinate Systems (Projection * View * Model)
 
 ## 📸 ตัวอย่างการทำงาน (Previews)
-คลิกที่เพื่อรับชมวิดีโอสาธิตการทำงาน (YouTube):
-[![Video Demo]()](https://youtu.be/YA_GnLpn6TE)
+คลิกที่เพื่อรับชมวิดีโอสาธิตการทำงาน :
+<video src= "https://github.com/user-attachments/assets/e5024709-6aad-462f-aecd-7c1504a9e6d1">
+</video>
 
 ---
 
