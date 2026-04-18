@@ -53,7 +53,7 @@
 ## 📸 ตัวอย่างการทำงาน (Previews)
 
 คลิกเพื่อรับชมวิดีโอสาธิตการทำงาน :
-<video src= "[ใส่ลิงก์วิดีโอใหม่ของคุณที่นี่]">
+<video src= "https://github.com/user-attachments/assets/06d28f30-1323-4fb0-98a3-451977556bc9">
 </video>
 
 ---
