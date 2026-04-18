@@ -2,58 +2,58 @@
 
 ---
 
-# 🌊 3D Gerstner Wave & Boat Simulation
+# 🏃‍♂️ 3D Animated Character Controller
 
-โปรเจกต์นี้เป็นการสร้างเกม 3D แบบอินเทอร์แอคทีฟที่จำลองพลวัตของผิวน้ำ (Fluid Surface Simulation) พร้อมระบบขับเคลื่อนเรือ การคำนวณฟิสิกส์การชน (Collision) และการเก็บไอเทม โดยพัฒนาด้วย C++ และ OpenGL
+โปรเจกต์นี้เป็นการสร้างระบบควบคุมตัวละคร 3 มิติในมุมมองบุคคลที่สาม (Third-Person Controller) พร้อมระบบแอนิเมชันโครงกระดูก (Skeletal Animation) แผนผังการเคลื่อนที่แบบอ้างอิงมุมกล้อง และสภาพแวดล้อมพื้นฐาน พัฒนาด้วย C++ และ OpenGL
 
 ## 🌟 ฟีเจอร์หลัก (Key Features)
 
 โปรเจกต์นี้แสดงผลการทำงานของกราฟิกและระบบเกมเพลย์ดังนี้:
 
-### 1. Gerstner Wave Physics & Render (ระบบคลื่นผิวน้ำ)
-การจำลองความพริ้วไหวของน้ำใช้สมการ **Gerstner Wave** เพื่อสร้างยอดคลื่นที่มีความแหลมและสมจริง
-* **Shader & CPU Synchronization:** คลื่นย่อย 4 ลูก (`waves`) ถูกคำนวณบน Vertex Shader เพื่อการแสดงผลแบบ Real-time และถูกจำลองบน CPU ไปพร้อมๆ กัน เพื่อให้ตัวละคร (เรือ) ลอยขึ้น-ลงและโยกตามยอดคลื่นได้อย่างแม่นยำ
-* **Dual Rendering Mode:** แสดงผลผิวน้ำแบบทึบ (Solid Fill) ซ้อนทับด้วยโครงข่ายเส้นตาราง (Wireframe) เพื่อเน้นให้เห็นมิติเรขาคณิตและความสูงชันของคลื่น
+### 1. Skeletal Animation System (ระบบแอนิเมชันโครงกระดูก)
 
-### 2. Vehicle Controller (ระบบควบคุมยานพาหนะ)
-* ใช้ตรรกะการขับเคลื่อนคล้ายรถยนต์/เรือ (Ackermann-like Steering)
-* ผู้เล่นสามารถหมุนพวงมาลัย (A/D) ได้ก็ต่อเมื่อกำลังเหยียบคันเร่ง (W) หรือถอยหลัง (S) เท่านั้น
-* มีระบบจำลองการปัดของหน้ารถเมื่อถอยหลังเข้าโค้ง เพิ่มมิติความสมจริงให้กับการควบคุม
+- **Animation State Machine:** ระบบคำนวณและสลับการเล่นแอนิเมชันของตัวละครระหว่างท่ายืนปกติ (Standing) และท่าเดิน (Walking) โดยอัตโนมัติตามสถานะการเคลื่อนที่ (Input state)
+- **Bone Transformations:** โหลดและคำนวณเมทริกซ์การเคลื่อนไหวของกระดูก (Bone Matrices) ส่งผ่านไปยัง Vertex Shader เพื่อทำให้โมเดลขยับได้อย่างเป็นธรรมชาติ
 
-### 3. Gameplay Systems (ระบบเกมเพลย์)
-* **Bounding Sphere Collision:** ระบบตรวจจับการชนแบบทรงกลม ป้องกันไม่ให้ผู้เล่นขับเรือทะลุโขดหิน (Rock Obstacles) รวมไปถึงการป้องกันไม่ให้กระแสน้ำพัดตัวละครทะลุหิน
-* **Collectible Items:** ระบบตรวจจับการเก็บไอเทมในฉาก โดยโมเดลไอเทมจะหมุนลอยตัวอยู่ และจะหายไปทันทีเมื่อเรือแล่นเข้าไปใกล้ในระยะที่กำหนด
-* **Third-Person Follow Camera:** กล้อง 3 มิติถูกผูกติดให้วิ่งตามด้านหลังของเรือเสมอ โดยผู้เล่นยังสามารถใช้เมาส์หมุนกล้องเพื่อสำรวจรอบทิศทาง (360 องศา) ได้อย่างอิสระ
+### 2. Third-Person Character Controller (ระบบควบคุมตัวละคร)
+
+- **Camera-Relative Movement:** ผู้เล่นสามารถบังคับตัวละครให้เดินไปยังทิศทางต่างๆ (WASD) โดยอ้างอิงจากมุมมองของกล้องเป็นหลัก (คล้ายเกม Action RPG ทั่วไป)
+- **Auto-Rotation:** ตัวละครจะคำนวณและหมุนตัวหันหน้าไปทางทิศทางที่กำลังเดินอยู่เสมอโดยใช้ฟังก์ชันทางคณิตศาสตร์ (`atan2`)
+
+### 3. Dynamic Follow Camera (กล้องติดตามตัวละคร)
+
+- กล้อง 3 มิติถูกผูกติดให้วิ่งตามและมองลงมาที่ตัวละครเสมอ
+- ผู้เล่นสามารถใช้เมาส์เพื่อหมุนกล้องสำรวจรอบทิศทาง (360 องศา) รอบตัวละครได้อย่างอิสระโดยไม่กระทบกับทิศทางที่ตัวละครกำลังหันหน้าอยู่
 
 ## 🛠 เทคโนโลยีที่ใช้ (Tech Stack)
 
-* **Language:** C++ (Standard 11+)
-* **Graphics API:** OpenGL 3.3 (Core Profile)
-* **Libraries:**
-  * `GLFW` (Window & Input handling)
-  * `GLAD` (OpenGL Function Loader)
-  * `GLM` (Mathematics: Vector & Matrix operations)
-  * `Assimp` (3D Model Loading)
-* **Shader Language:** GLSL
+- **Language:** C++ (Standard 11+)
+- **Graphics API:** OpenGL 3.3 (Core Profile)
+- **Libraries:**
+  - `GLFW` (Window & Input handling)
+  - `GLAD` (OpenGL Function Loader)
+  - `GLM` (Mathematics: Vector & Matrix operations)
+  - `Assimp` (3D Model & Animation Loading)
+- **Shader Language:** GLSL
 
 ## 🎮 การควบคุม (Controls)
 
-* **W / S:** เดินหน้า / ถอยหลัง (Accelerate / Reverse)
-* **A / D:** เลี้ยวซ้าย / เลี้ยวขวา (เรือต้องกำลังเคลื่อนที่อยู่ถึงจะเลี้ยวได้)
-* **Mouse Movement:** หันมุมกล้องมองรอบตัวเรือ
-* **Mouse Scroll:** ซูมเข้า - ซูมออก
-* **ESC:** ออกจากโปรแกรม
+- **W / A / S / D:** เคลื่อนที่ตัวละคร (หน้า / ซ้าย / หลัง / ขวา) อ้างอิงจากมุมมองกล้อง
+- **Mouse Movement:** หันมุมกล้องมองรอบตัวละคร
+- **Mouse Scroll:** ซูมเข้า - ซูมออก
+- **ESC:** ออกจากโปรแกรม
 
 ## 📂 โครงสร้างระบบ (System Structure)
 
-* **3D Models:** โหลดโมเดลนามสกุล `.obj` เข้ามาในฉาก เช่น `ship` (ตัวละคร), `rock` (สิ่งกีดขวาง), และ `oil` (ไอเทม)
-* **Shaders:**
-  * `7.4.camera.vs` / `7.4.camera.fs` สำหรับเรนเดอร์โครงสร้างน้ำและการจำลองคลื่น
-  * `1.model_loading.vs` / `1.model_loading.fs` สำหรับเรนเดอร์โมเดล 3D ต่างๆ ในฉากด้วย Projection * View * Model matrix
- 
+- **3D Models & Animations:** โหลดโมเดล 3D แบบ Skeletal Mesh นามสกุล `.dae` (Collada) เช่น โมเดลตัวละคร (`Ch03_nonPBR.dae`), ไฟล์แอนิเมชันเดิน (`walk.dae`), และแอนิเมชันยืนพัก (`standing.dae`)
+- **Shaders:**
+  - `anim_model.vs` / `anim_model.fs` สำหรับคำนวณ Skinning/Bones และเรนเดอร์โมเดลแอนิเมชัน
+  - `floor.vs` / `floor.fs` สำหรับเรนเดอร์พื้นทางเดิน (Ground Plane) พร้อมรับค่าแสงพื้นฐาน (Lighting Uniforms)
+
 ## 📸 ตัวอย่างการทำงาน (Previews)
-คลิกที่เพื่อรับชมวิดีโอสาธิตการทำงาน :
-<video src= "https://github.com/user-attachments/assets/9b218d48-6c66-4da5-b2fc-1505a8c3b761">
+
+คลิกเพื่อรับชมวิดีโอสาธิตการทำงาน :
+<video src= "[ใส่ลิงก์วิดีโอใหม่ของคุณที่นี่]">
 </video>
 
 ---
